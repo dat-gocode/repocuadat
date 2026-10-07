@@ -39,6 +39,36 @@
         </form>
       </section>
 
+      <section class="card" aria-labelledby="summary-title">
+        <h2 id="summary-title">Tổng kết</h2>
+        <dl class="summary">
+          <div class="stat stat-highlight">
+            <dt>GPA hệ 4</dt>
+            <dd id="stat-gpa4">—</dd>
+          </div>
+          <div class="stat stat-highlight">
+            <dt>GPA hệ 10</dt>
+            <dd id="stat-gpa10">—</dd>
+          </div>
+          <div class="stat stat-highlight">
+            <dt>Xếp loại</dt>
+            <dd id="stat-classification">—</dd>
+          </div>
+          <div class="stat">
+            <dt>Tổng số môn</dt>
+            <dd id="stat-count">0</dd>
+          </div>
+          <div class="stat">
+            <dt>Tổng tín chỉ</dt>
+            <dd id="stat-credits">0</dd>
+          </div>
+          <div class="stat">
+            <dt>Tín chỉ đạt</dt>
+            <dd id="stat-passed">0</dd>
+          </div>
+        </dl>
+      </section>
+
       <section class="card" aria-labelledby="table-title">
         <h2 id="table-title">Danh sách môn học</h2>
         <div class="table-wrap">
@@ -55,6 +85,7 @@
             <tbody id="subject-rows"></tbody>
           </table>
         </div>
+        <p class="empty-hint" id="empty-hint">Hãy thêm môn học đầu tiên</p>
       </section>
     </main>
     <script type="module" src="/src/main.js"></script>

@@ -1,4 +1,5 @@
 import './style.css';
+import { summarize } from './lib/gpa.js';
 import { convertGrade } from './lib/grade.js';
 import { addSubject } from './lib/subjects.js';
 import { validateSubjectInput } from './lib/validation.js';
@@ -21,6 +22,16 @@ const errorEls = {
   grade: document.getElementById('error-grade'),
 };
 const rowsEl = document.getElementById('subject-rows');
+const emptyHintEl = document.getElementById('empty-hint');
+const statEls = {
+  gpa4: document.getElementById('stat-gpa4'),
+  gpa10: document.getElementById('stat-gpa10'),
+  classification: document.getElementById('stat-classification'),
+  count: document.getElementById('stat-count'),
+  credits: document.getElementById('stat-credits'),
+  passed: document.getElementById('stat-passed'),
+};
+const EMPTY_VALUE = '—';
 
 function formatNumber(value, digits) {
   return value.toLocaleString('vi-VN', {
@@ -43,7 +54,19 @@ function clearForm() {
   inputs.name.focus();
 }
 
-function render() {
+function renderSummary() {
+  const summary = summarize(state.subjects);
+  const isEmpty = summary.count === 0;
+  statEls.gpa4.textContent = isEmpty ? EMPTY_VALUE : formatNumber(summary.gpa4, 2);
+  statEls.gpa10.textContent = isEmpty ? EMPTY_VALUE : formatNumber(summary.gpa10, 2);
+  statEls.classification.textContent = summary.classification ?? EMPTY_VALUE;
+  statEls.count.textContent = String(summary.count);
+  statEls.credits.textContent = String(summary.totalCredits);
+  statEls.passed.textContent = String(summary.passedCredits);
+  emptyHintEl.hidden = !isEmpty;
+}
+
+function renderTable() {
   rowsEl.replaceChildren(
     ...state.subjects.map((subject) => {
       const row = document.createElement('tr');
@@ -64,6 +87,11 @@ function render() {
       return row;
     }),
   );
+}
+
+function render() {
+  renderTable();
+  renderSummary();
 }
 
 form.addEventListener('submit', (event) => {
