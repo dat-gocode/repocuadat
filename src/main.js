@@ -1,16 +1,20 @@
 import './style.css';
 import { summarize } from './lib/gpa.js';
 import { convertGrade } from './lib/grade.js';
-import { addSubject } from './lib/subjects.js';
+import { addSubject, findSubject, removeSubject, updateSubject } from './lib/subjects.js';
 import { validateSubjectInput } from './lib/validation.js';
 
 const FIELDS = ['name', 'credits', 'grade'];
 
 const state = {
   subjects: [],
+  /** id môn đang sửa; null = chế độ Thêm. */
+  editingId: null,
 };
 
 const form = document.getElementById('subject-form');
+const formTitleEl = document.getElementById('form-title');
+const submitButton = document.getElementById('submit-button');
 const inputs = {
   name: document.getElementById('input-name'),
   credits: document.getElementById('input-credits'),
@@ -54,6 +58,49 @@ function clearForm() {
   inputs.name.focus();
 }
 
+function setEditMode(id) {
+  state.editingId = id;
+  const isEditing = id !== null;
+  formTitleEl.textContent = isEditing ? 'Sửa môn học' : 'Thêm môn học';
+  submitButton.textContent = isEditing ? 'Lưu' : 'Thêm môn';
+}
+
+function exitEditMode() {
+  setEditMode(null);
+  clearForm();
+}
+
+function startEdit(id) {
+  const subject = findSubject(state.subjects, id);
+  if (!subject) return;
+  setEditMode(id);
+  inputs.name.value = subject.name;
+  inputs.credits.value = String(subject.credits);
+  inputs.grade.value = formatNumber(subject.grade10, 1);
+  showErrors({});
+  renderTable();
+  inputs.name.focus();
+}
+
+function deleteSubject(id) {
+  const subject = findSubject(state.subjects, id);
+  if (!subject) return;
+  if (!window.confirm(`Xoá môn "${subject.name}"?`)) return;
+  state.subjects = removeSubject(state.subjects, id);
+  if (state.editingId === id) exitEditMode();
+  render();
+}
+
+function createActionButton(label, action, id, className) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = `btn btn-small ${className}`;
+  button.textContent = label;
+  button.dataset.action = action;
+  button.dataset.id = id;
+  return button;
+}
+
 function renderSummary() {
   const summary = summarize(state.subjects);
   const isEmpty = summary.count === 0;
@@ -84,6 +131,14 @@ function renderTable() {
         if (className) cell.className = className;
         row.append(cell);
       }
+      const actionsCell = document.createElement('td');
+      actionsCell.className = 'actions';
+      actionsCell.append(
+        createActionButton('Sửa', 'edit', subject.id, 'btn-secondary'),
+        createActionButton('Xoá', 'delete', subject.id, 'btn-danger'),
+      );
+      row.append(actionsCell);
+      if (subject.id === state.editingId) row.classList.add('is-editing');
       return row;
     }),
   );
@@ -107,9 +162,25 @@ form.addEventListener('submit', (event) => {
     inputs[firstInvalid].focus();
     return;
   }
+  if (state.editingId !== null) {
+    // F4 – Lưu: môn đang sửa có thể đã bị xoá ở nơi khác thì chỉ thoát chế độ Sửa.
+    if (findSubject(state.subjects, state.editingId)) {
+      state.subjects = updateSubject(state.subjects, state.editingId, result.value);
+    }
+    exitEditMode();
+    render();
+    return;
+  }
   state.subjects = addSubject(state.subjects, result.value);
   render();
   clearForm();
+});
+
+rowsEl.addEventListener('click', (event) => {
+  const button = event.target.closest('button[data-action]');
+  if (!button) return;
+  if (button.dataset.action === 'edit') startEdit(button.dataset.id);
+  if (button.dataset.action === 'delete') deleteSubject(button.dataset.id);
 });
 
 render();

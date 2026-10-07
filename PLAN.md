@@ -20,7 +20,7 @@ Thứ tự theo phụ thuộc trong PRD: F1 → F2 → F3 → F4 → F5.
 - [x] F1 – Validation và thêm môn + unit test
 - [x] F2 – Hàm quy đổi điểm + unit test (biên của từng khoảng điểm)
 - [x] F3 – Tính GPA, làm tròn, xếp loại + unit test
-- [ ] F4 – Sửa/xoá môn + unit test
+- [x] F4 – Sửa/xoá môn + unit test
 - [ ] F5 – Lưu/tải localStorage, dữ liệu hỏng, xoá tất cả + unit test
 - [ ] Giao diện: form, bảng, khối tổng kết, thông báo lỗi tiếng Việt
 - [ ] Responsive (màn hình ≥ 360px)
