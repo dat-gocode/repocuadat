@@ -16,8 +16,8 @@ Lưu tại `docs/flows.md`.
 
 ## Giai đoạn 3 – Cài đặt và kiểm thử tự động
 Thứ tự theo phụ thuộc trong PRD: F1 → F2 → F3 → F4 → F5.
-- [ ] Khởi tạo dự án Vite (JS thuần) + Vitest, scripts `dev`, `build`, `test`
-- [ ] F1 – Validation và thêm môn + unit test
+- [x] Khởi tạo dự án Vite (JS thuần) + Vitest, scripts `dev`, `build`, `test`
+- [x] F1 – Validation và thêm môn + unit test
 - [ ] F2 – Hàm quy đổi điểm + unit test (biên của từng khoảng điểm)
 - [ ] F3 – Tính GPA, làm tròn, xếp loại + unit test
 - [ ] F4 – Sửa/xoá môn + unit test

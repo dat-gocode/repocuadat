@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GPA Tracker – Tính điểm trung bình tích lũy</title>
+  </head>
+  <body>
+    <main class="container">
+      <header class="page-header">
+        <h1>GPA Tracker</h1>
+        <p class="subtitle">Nhập điểm các môn đã học để xem điểm trung bình tích lũy.</p>
+      </header>
+
+      <section class="card" aria-labelledby="form-title">
+        <h2 id="form-title">Thêm môn học</h2>
+        <form id="subject-form" novalidate>
+          <div class="field field-name">
+            <label for="input-name">Tên môn</label>
+            <input id="input-name" name="name" type="text" autocomplete="off"
+              aria-describedby="error-name" placeholder="VD: Giải tích 1" />
+            <p class="error" id="error-name" role="alert"></p>
+          </div>
+          <div class="field">
+            <label for="input-credits">Số tín chỉ</label>
+            <input id="input-credits" name="credits" type="text" inputmode="numeric"
+              autocomplete="off" aria-describedby="error-credits" placeholder="1–10" />
+            <p class="error" id="error-credits" role="alert"></p>
+          </div>
+          <div class="field">
+            <label for="input-grade">Điểm hệ 10</label>
+            <input id="input-grade" name="grade" type="text" inputmode="decimal"
+              autocomplete="off" aria-describedby="error-grade" placeholder="VD: 8,5" />
+            <p class="error" id="error-grade" role="alert"></p>
+          </div>
+          <div class="form-actions">
+            <button type="submit" id="submit-button" class="btn btn-primary">Thêm môn</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card" aria-labelledby="table-title">
+        <h2 id="table-title">Danh sách môn học</h2>
+        <div class="table-wrap">
+          <table class="subject-table">
+            <thead>
+              <tr>
+                <th scope="col">Tên môn</th>
+                <th scope="col" class="num">Tín chỉ</th>
+                <th scope="col" class="num">Điểm 10</th>
+              </tr>
+            </thead>
+            <tbody id="subject-rows"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
