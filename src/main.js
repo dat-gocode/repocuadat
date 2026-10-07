@@ -1,4 +1,5 @@
 import './style.css';
+import { convertGrade } from './lib/grade.js';
 import { addSubject } from './lib/subjects.js';
 import { validateSubjectInput } from './lib/validation.js';
 
@@ -46,10 +47,13 @@ function render() {
   rowsEl.replaceChildren(
     ...state.subjects.map((subject) => {
       const row = document.createElement('tr');
+      const { letter, point4 } = convertGrade(subject.grade10);
       const cells = [
         [subject.name, ''],
         [String(subject.credits), 'num'],
         [formatNumber(subject.grade10, 1), 'num'],
+        [letter, 'num'],
+        [formatNumber(point4, 1), 'num'],
       ];
       for (const [text, className] of cells) {
         const cell = document.createElement('td');
