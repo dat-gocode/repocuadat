@@ -161,6 +161,40 @@ body {
   color: var(--muted);
 }
 
+.btn-small {
+  padding: 6px 12px;
+  font-size: 0.875rem;
+}
+
+.btn-secondary {
+  background: #fff;
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.btn-secondary:hover {
+  background: #f0f2f7;
+}
+
+.btn-danger {
+  background: #fff;
+  border-color: #f0c4c4;
+  color: var(--danger);
+}
+
+.btn-danger:hover {
+  background: #fdeeee;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 .table-wrap {
   overflow-x: auto;
 }
@@ -187,6 +221,19 @@ body {
 
 .subject-table td:first-child {
   overflow-wrap: anywhere;
+}
+
+.subject-table .actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.subject-table .actions .btn + .btn {
+  margin-left: 6px;
+}
+
+.subject-table tr.is-editing td {
+  background: #eef2fe;
 }
 
 .subject-table .num {

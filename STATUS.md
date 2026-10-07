@@ -1,14 +1,14 @@
 # STATUS – GPA Tracker
 
 ## Trạng thái hiện tại
-- **Giai đoạn:** 3 – Cài đặt và kiểm thử tự động (đang làm: xong F1, F2, F3)
+- **Giai đoạn:** 3 – Cài đặt và kiểm thử tự động (đang làm: xong F1–F4)
 - **Cập nhật lần cuối:** 2026-10-07
 
 | Giai đoạn | Trạng thái |
 |-----------|------------|
 | 1. Yêu cầu (PRD) | Xong |
 | 2. Thiết kế luồng nghiệp vụ | Xong – `docs/flows.md` |
-| 3. Cài đặt và kiểm thử tự động | Đang làm – F1, F2, F3 đã merge vào `main` |
+| 3. Cài đặt và kiểm thử tự động | Đang làm – F1–F4 đã merge vào `main` |
 | 4. Kiểm thử người dùng | Chưa làm |
 | 5. Deploy lên Vercel | Chưa làm |
 
