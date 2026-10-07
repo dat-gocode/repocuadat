@@ -1,13 +1,16 @@
 import './style.css';
 import { summarize } from './lib/gpa.js';
 import { convertGrade } from './lib/grade.js';
+import { getBrowserStorage, loadSubjects, saveSubjects } from './lib/storage.js';
 import { addSubject, findSubject, removeSubject, updateSubject } from './lib/subjects.js';
 import { validateSubjectInput } from './lib/validation.js';
 
 const FIELDS = ['name', 'credits', 'grade'];
 
+const storage = getBrowserStorage();
+
 const state = {
-  subjects: [],
+  subjects: loadSubjects(storage),
   /** id môn đang sửa; null = chế độ Thêm. */
   editingId: null,
 };
@@ -26,6 +29,7 @@ const errorEls = {
   grade: document.getElementById('error-grade'),
 };
 const rowsEl = document.getElementById('subject-rows');
+const clearAllButton = document.getElementById('clear-all-button');
 const emptyHintEl = document.getElementById('empty-hint');
 const statEls = {
   gpa4: document.getElementById('stat-gpa4'),
@@ -58,6 +62,13 @@ function clearForm() {
   inputs.name.focus();
 }
 
+/** Cập nhật danh sách, lưu localStorage (F5) rồi vẽ lại. */
+function commitSubjects(subjects) {
+  state.subjects = subjects;
+  saveSubjects(storage, state.subjects);
+  render();
+}
+
 function setEditMode(id) {
   state.editingId = id;
   const isEditing = id !== null;
@@ -86,9 +97,8 @@ function deleteSubject(id) {
   const subject = findSubject(state.subjects, id);
   if (!subject) return;
   if (!window.confirm(`Xoá môn "${subject.name}"?`)) return;
-  state.subjects = removeSubject(state.subjects, id);
   if (state.editingId === id) exitEditMode();
-  render();
+  commitSubjects(removeSubject(state.subjects, id));
 }
 
 function createActionButton(label, action, id, className) {
@@ -111,6 +121,7 @@ function renderSummary() {
   statEls.credits.textContent = String(summary.totalCredits);
   statEls.passed.textContent = String(summary.passedCredits);
   emptyHintEl.hidden = !isEmpty;
+  clearAllButton.disabled = isEmpty;
 }
 
 function renderTable() {
@@ -164,16 +175,23 @@ form.addEventListener('submit', (event) => {
   }
   if (state.editingId !== null) {
     // F4 – Lưu: môn đang sửa có thể đã bị xoá ở nơi khác thì chỉ thoát chế độ Sửa.
-    if (findSubject(state.subjects, state.editingId)) {
-      state.subjects = updateSubject(state.subjects, state.editingId, result.value);
-    }
+    const editingId = state.editingId;
     exitEditMode();
-    render();
+    if (findSubject(state.subjects, editingId)) {
+      commitSubjects(updateSubject(state.subjects, editingId, result.value));
+    } else {
+      render();
+    }
     return;
   }
-  state.subjects = addSubject(state.subjects, result.value);
-  render();
+  commitSubjects(addSubject(state.subjects, result.value));
   clearForm();
+});
+
+clearAllButton.addEventListener('click', () => {
+  if (!window.confirm('Xoá toàn bộ môn học? Thao tác này không thể hoàn tác.')) return;
+  if (state.editingId !== null) exitEditMode();
+  commitSubjects([]);
 });
 
 rowsEl.addEventListener('click', (event) => {

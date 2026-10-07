@@ -1,15 +1,15 @@
 # STATUS – GPA Tracker
 
 ## Trạng thái hiện tại
-- **Giai đoạn:** 3 – Cài đặt và kiểm thử tự động (đang làm: xong F1–F4)
+- **Giai đoạn:** 4 – Kiểm thử người dùng (chờ người dùng kiểm thử)
 - **Cập nhật lần cuối:** 2026-10-07
 
 | Giai đoạn | Trạng thái |
 |-----------|------------|
 | 1. Yêu cầu (PRD) | Xong |
 | 2. Thiết kế luồng nghiệp vụ | Xong – `docs/flows.md` |
-| 3. Cài đặt và kiểm thử tự động | Đang làm – F1–F4 đã merge vào `main` |
-| 4. Kiểm thử người dùng | Chưa làm |
+| 3. Cài đặt và kiểm thử tự động | Xong – F1–F5 đã merge vào `main`, 90 test đạt, build đạt |
+| 4. Kiểm thử người dùng | Đang chờ người dùng |
 | 5. Deploy lên Vercel | Chưa làm |
 
 - **URL production:** chưa có
@@ -24,6 +24,8 @@
 | 2026-10-07 | Tạo nhánh `main` ở local từ `gpa-tracker` (chưa push) | Repo chưa có `main`; người dùng chọn phương án này |
 | 2026-10-07 | Logic nghiệp vụ nằm trong `src/lib/` (không đụng DOM), `src/main.js` chỉ lo DOM; test trong `tests/` | Test được bằng Vitest, đúng `CLAUDE.md` |
 | 2026-10-07 | Làm tròn bằng `roundTo()` (`toPrecision(12)` trước khi `Math.round`) | Tránh sai số dấu phẩy động, vd 8.45 → 8.5 |
+| 2026-10-07 | Hàm localStorage nhận `storage` qua tham số; truy cập/ghi lỗi không ném ra ngoài | Test được không cần trình duyệt; trang không bị trắng khi localStorage bị chặn hoặc đầy |
+| 2026-10-07 | Kiểm tra giao diện bản build bằng jsdom (script tạm, không đưa vào dự án) trước mỗi lần merge | Bắt lỗi runtime ở phần DOM mà unit test không phủ |
 
 ## Thay đổi so với ban đầu
 | Ngày | Thay đổi | Lý do | Ảnh hưởng (PRD/PLAN/code) |
