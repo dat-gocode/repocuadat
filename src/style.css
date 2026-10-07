@@ -53,6 +53,18 @@ body {
   font-size: 1.15rem;
 }
 
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.card-header h2 {
+  margin: 0;
+}
+
 #subject-form {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
@@ -184,6 +196,15 @@ body {
 
 .btn-danger:hover {
   background: #fdeeee;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-danger:disabled:hover {
+  background: #fff;
 }
 
 .visually-hidden {

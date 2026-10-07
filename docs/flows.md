@@ -224,7 +224,7 @@ flowchart TD
     E -->|Không| R
     E -->|Có| F{Là mảng?}
     F -->|Không| R
-    F -->|Có| G{Mọi phần tử hợp lệ?<br/>id là chuỗi, name/credits/grade10<br/>đúng quy tắc như F1}
+    F -->|Có| G{Mọi phần tử hợp lệ?<br/>id là chuỗi không rỗng, không trùng<br/>name/credits/grade10 đúng quy tắc như F1}
     G -->|Không| R
     G -->|Có| H[Dùng danh sách đã đọc]
     R --> Z([Trả về danh sách – trang luôn hiển thị bình thường])
@@ -271,3 +271,4 @@ Những điểm PRD chưa nói rõ, được chốt như sau (không thêm chứ
 6. **Dữ liệu hỏng:** chỉ cần một phần tử sai là coi cả dữ liệu hỏng và khởi tạo danh sách rỗng,
    đúng như PRD ghi.
 7. **Ghi localStorage lỗi:** PRD không quy định thông báo, nên chỉ ghi cảnh báo ra console và app vẫn chạy.
+8. **Nút "Xoá tất cả" khi danh sách rỗng:** nút bị mờ (disabled), vì không có gì để xoá.
